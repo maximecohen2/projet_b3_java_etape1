@@ -1,8 +1,8 @@
-package productManager;
+package fr.epsi.b3.productManager;
 
-public class LabelPdf extends AbstractPdf {
+public class SheetPdf extends AbstractPdf {
 
-	public LabelPdf(String fileName) {
+	public SheetPdf(String fileName) {
 		super(fileName);
 		// TODO Auto-generated constructor stub
 	}

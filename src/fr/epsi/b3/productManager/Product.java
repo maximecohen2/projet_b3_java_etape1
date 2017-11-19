@@ -1,7 +1,7 @@
-package productManager;
+package fr.epsi.b3.productManager;
 
 public class Product {
-	private float tva = 20;
+	private float tva;
 	private String code;
 	private String nom;
 	private String description;
