@@ -1,4 +1,4 @@
-package fr.epsi.b3.productManager;
+package fr.epsi.b3;
 
 public class Product {
 	private float tva;
@@ -9,21 +9,14 @@ public class Product {
 	private float prixHT;
 	private float prixTTC;
 	
-	public Product(float tva) {
-		this.tva = tva;
-	}
-	
-	public void setData(String code, String nom, String description, String categorie, float prixHT) {
+	public Product(String code, String nom, String description, String categorie, float prixHT, float tva) {
 		this.code = code;
 		this.nom = nom;
 		this.description = description;
 		this.categorie = categorie;
 		this.prixHT = prixHT;
-		this.prixTTC = (this.prixHT / 100)*this.tva + this.prixHT;
-	}
-
-	public float getTva() {
-		return tva;
+		this.prixTTC = (prixHT / 100) * tva + prixHT;
+		this.tva = tva;
 	}
 
 	public String getCode() {
@@ -49,7 +42,8 @@ public class Product {
 	public float getPrixTTC() {
 		return prixTTC;
 	}
-	
-	
 
+	public float getTva() {
+		return tva;
+	}
 }

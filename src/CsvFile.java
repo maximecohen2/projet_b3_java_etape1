@@ -10,7 +10,7 @@ public class CsvFile {
 		this.buffer = new BufferedReader(new FileReader(fileName));
 	}
 	
-	public String[] readData() throws IOException {
+	public String[] readDataLine() throws IOException {
 		String line;
 		String[] data;
 		try {

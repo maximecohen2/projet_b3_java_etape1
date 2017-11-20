@@ -1,31 +1,64 @@
 import java.io.IOException;
-import java.util.Arrays;
 
-import org.apache.commons.cli.ParseException;
+import com.itextpdf.text.DocumentException;
+
+import fr.epsi.b3.LabelPdf;
+import fr.epsi.b3.Product;
+import fr.epsi.b3.ProductManager;
+import fr.epsi.b3.SheetPdf;
 
 public final class ProductsToPdf {
 	
-	public static void main(String[] args) throws ParseException, IOException{
-		Parser parser = new Parser();
-		CsvFile csv = new CsvFile();
+	public static void convertCsvToPdf(Parser parser, CsvFile csv) throws IOException, NumberFormatException, DocumentException {
+		ProductManager productManager;
+		String[] data;
 		
-		try {
-			parser.parseParameters(args);
-			csv.open(parser.getInputFile());
-			String[] data;
-			while ((data = csv.readData()) != null) {
-				if (data.length == 5) {
-					System.out.println(Arrays.toString(data));
-					// DO SOMETHING !
-				} else {
-					System.err.println("Warning: Invalid CSV file line");
+		productManager = new ProductManager();
+		if (parser.getLabelFile() != null) {
+			productManager.addPdf(new LabelPdf(parser.getLabelFile()));
+		}
+		if (parser.getSheetFile() != null) {
+			productManager.addPdf(new SheetPdf(parser.getSheetFile()));
+		}
+		while ((data = csv.readDataLine()) != null) {
+			if (data.length == 5) {
+				if (parser.getCategory() == null ||
+					(parser.getCategory() != null && data[3].equals(parser.getCategory()))) {
+					productManager.addProduct(new Product(
+							data[0],
+							data[1],
+							data[2],
+							data[3],
+							Float.valueOf(data[4].replace(',', '.')),
+							parser.getTva()
+							));
 				}
 			}
+		}
+		productManager.closePdfs();
+	}
+	
+	public static void main(String[] args){
+		Parser parser;
+		CsvFile csv = null;
+		
+		try {
+			parser = new Parser();
+			csv = new CsvFile();
+			parser.parseParameters(args);
+			csv.open(parser.getInputFile());
+			convertCsvToPdf(parser, csv);
 		} catch (Exception e) {
 			System.err.println("Error: " + e.getMessage());
 			System.exit(3);
 		} finally {
-			csv.close();
+			if (csv != null) {
+				try {
+					csv.close();
+				} catch (IOException e) {
+					System.err.println("Error: " + e.getMessage());
+				}
+			}
 		}
 	}
 }
