@@ -55,7 +55,7 @@ public final class ProductsToPdf {
 			if (csv != null) {
 				try {
 					csv.close();
-				} catch (IOException e) {
+				} catch (Exception e) {
 					System.err.println("Error: " + e.getMessage());
 				}
 			}

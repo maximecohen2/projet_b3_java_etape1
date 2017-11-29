@@ -10,6 +10,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public abstract class AbstractPdf {
 	protected Document document;
 	protected String fileName;
+	protected PdfWriter writer;
 	
 	public AbstractPdf(String fileName) {
 		this.document = new Document();
@@ -18,7 +19,7 @@ public abstract class AbstractPdf {
 	
 	public void open() {
 		try {
-			PdfWriter.getInstance(this.document, new FileOutputStream(this.fileName));
+			this.writer = PdfWriter.getInstance(this.document, new FileOutputStream(this.fileName));
 			document.open();
 		} catch (DocumentException e) {
             e.printStackTrace();

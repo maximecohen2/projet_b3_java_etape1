@@ -12,7 +12,8 @@ public class Parser {
 	private String sheetFile;
 	private float tva;
 	
-	private static Options configParameters(final Options otherOptions) {
+	// Configuration des paramètres d'entrées du programmes
+	private static Options configParameters(final Options... otherOptionsList) {
 		final Option inputFileOption = Option.builder("i")
 	            .desc("fichier d'entrée CSV")
 	            .hasArg(true)
@@ -38,15 +39,17 @@ public class Parser {
 	            .required(false)
 	            .build();
 		final Option tvaOption = Option.builder("tva")
-	            .desc("montant de la tva") 
+	            .desc("montant de la tva (default: 20%)") 
 	            .hasArg(true)
 	            .argName("tva")
 	            .required(false)
 	            .build();
 		
 		final Options options = new Options();
-		for (final Option fo : otherOptions.getOptions()) {
-			options.addOption(fo);
+		for (final Options otherOptions : otherOptionsList) {
+			for (final Option fo : otherOptions.getOptions()) {
+				options.addOption(fo);
+			}
 		}
 		options.addOption(inputFileOption);
 		options.addOption(categoryOption);
@@ -56,6 +59,7 @@ public class Parser {
 		return options;
 	}
 	
+	// Configuration du paramètre "-h"
 	private static Options configHelp() {
 		final Option helpOption = Option.builder("h") 
 	            .desc("Affiche le message d'aide") 
@@ -65,6 +69,7 @@ public class Parser {
 		return options;
 	}
 	
+	//
 	public void parseParameters(String[] args) throws Exception {
 		final Options helpOptions = configHelp();
 		final Options options = configParameters(helpOptions);
@@ -115,13 +120,4 @@ public class Parser {
 	public float getTva() {
 		return tva;
 	}
-
-	@Override
-	public String toString() {
-		return "Parser [inputFile=" + inputFile + ", category=" + category + ", labelFile=" + labelFile + ", sheetFile="
-				+ sheetFile + ", tva=" + tva + "]";
-	}
-	
-	
-
 }
