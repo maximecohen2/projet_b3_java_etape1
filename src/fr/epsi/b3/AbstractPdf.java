@@ -1,5 +1,6 @@
 package fr.epsi.b3;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
@@ -19,7 +20,12 @@ public abstract class AbstractPdf {
 	
 	public void open() {
 		try {
-			this.writer = PdfWriter.getInstance(this.document, new FileOutputStream(this.fileName));
+			File f = new File(this.fileName);
+			File pDir = f.getParentFile();
+			if (pDir != null && !pDir.exists()) {
+				pDir.mkdirs();
+			}
+			this.writer = PdfWriter.getInstance(this.document, new FileOutputStream(f));
 			document.open();
 		} catch (DocumentException e) {
             e.printStackTrace();

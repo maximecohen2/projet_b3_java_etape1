@@ -24,7 +24,7 @@ public final class ProductsToPdf {
 			if (data.length == 5) {
 				if (parser.getCategory() == null ||
 					(parser.getCategory() != null && data[3].equals(parser.getCategory()))) {
-					productManager.addProduct(new Product(
+						productManager.addProduct(new Product(
 							data[0],
 							data[1],
 							data[2],
