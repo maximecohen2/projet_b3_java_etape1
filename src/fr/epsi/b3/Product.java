@@ -9,7 +9,7 @@ public class Product {
 	private float prixHT;
 	private float prixTTC;
 	
-	public Product(String code, String nom, String description, String categorie, float prixHT, float tva) {
+	public void setData(String code, String nom, String description, String categorie, float prixHT, float tva) {
 		this.code = code;
 		this.nom = nom;
 		this.description = description;
@@ -18,7 +18,7 @@ public class Product {
 		this.prixTTC = (prixHT / 100) * tva + prixHT;
 		this.tva = tva;
 	}
-
+	
 	public String getCode() {
 		return code;
 	}
