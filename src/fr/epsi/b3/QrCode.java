@@ -1,6 +1,7 @@
 package fr.epsi.b3;
 
 import java.awt.Image;
+import java.awt.Toolkit;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -13,6 +14,6 @@ public class QrCode {
 	public static Image generate(String content, int size) throws WriterException {
 		QRCodeWriter qrWriter = new QRCodeWriter();
 		Object matrix = qrWriter.encode(content, BarcodeFormat.QR_CODE, size, size);
-		return MatrixToImageWriter.toBufferedImage((BitMatrix) matrix);
+		return Toolkit.getDefaultToolkit().createImage(MatrixToImageWriter.toBufferedImage((BitMatrix) matrix).getSource());
 	}
 }
