@@ -34,7 +34,7 @@ public abstract class AbstractPdf {
         }
 	}
 	
-	public void close() {
+	public void close()  throws DocumentException {
 		document.close();
 	}
 	

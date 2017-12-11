@@ -18,7 +18,7 @@ public class ProductManager {
 		}
 	}
 	
-	public void closePdfs() {
+	public void closePdfs() throws DocumentException {
 		for (AbstractPdf pdf : this.pdfFiles) {
 			pdf.close();
 		}
