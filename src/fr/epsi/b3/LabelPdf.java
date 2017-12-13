@@ -35,7 +35,7 @@ public class LabelPdf extends AbstractPdf {
 		try {
 			Image qr = QrCode.generate(product.getCode(),40);
 			qr.scalePercent(150f);
-			Paragraph PdtPrix = new Paragraph(product.getPrixTTC() + "€ TTC (" + product.getPrixHT() + "€HT )",fontReduce);
+			Paragraph PdtPrix = new Paragraph(Math.round(product.getPrixTTC()) + ",00€ TTC (" + Math.round(product.getPrixHT()) + ",00€ HT )",fontReduce);
 			Paragraph PdtCode = new Paragraph(product.getCode(),fontNormal);
 			Paragraph PdtNom = new Paragraph(product.getNom(),fontNormal);
 			PdfPCell cell = new PdfPCell();

@@ -54,7 +54,7 @@ public class SheetPdf extends AbstractPdf {
 		cell1 = new PdfPCell(new Paragraph(""));
 		PdfPCell cell2 = new PdfPCell(new Paragraph(""));
 		PdfPCell cell3 = new PdfPCell(new Paragraph("Montant HT: ", fontNormal));
-		PdfPCell cell4 = new PdfPCell(new Paragraph(product.getPrixHT() + "€"));
+		PdfPCell cell4 = new PdfPCell(new Paragraph(Math.round(product.getPrixHT()) + ",00€"));
 		
 		cell4.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
 		PdfPCell cell5 = new PdfPCell(new Paragraph(""));
@@ -66,7 +66,7 @@ public class SheetPdf extends AbstractPdf {
 		PdfPCell cell9 = new PdfPCell(new Paragraph(""));
 		PdfPCell cell10 = new PdfPCell(new Paragraph(""));
 		PdfPCell cell11 = new PdfPCell(new Paragraph("Montant TTC: ", fontNormal));
-		PdfPCell cell12 = new PdfPCell(new Paragraph(product.getPrixTTC() + "€"));
+		PdfPCell cell12 = new PdfPCell(new Paragraph(Math.round(product.getPrixTTC()) + ",00€"));
 		cell12.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
 		cell1.setBorder(Rectangle.NO_BORDER);
 		cell2.setBorder(Rectangle.NO_BORDER);
