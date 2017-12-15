@@ -9,37 +9,41 @@ import fr.epsi.b3.SheetPdf;
 
 public final class ProductsToPdf {
 	
-	private static void addPdf(Parser parser, ProductManager productManager) {
+	private ProductManager productManager;
+	private String category;
+	private float tva;
+	
+	public ProductsToPdf(String category, float tva) {
+		this.productManager = new ProductManager();
+		this.category = category;
+		this.tva = tva;
+	}
+	
+	public void addPdfs(Parser parser) {
 		if (parser.getLabelFile() != null) {
-			productManager.addPdf(new LabelPdf(parser.getLabelFile()));
+			this.productManager.addPdf(new LabelPdf(parser.getLabelFile()));
 		}
 		if (parser.getSheetFile() != null) {
-			productManager.addPdf(new SheetPdf(parser.getSheetFile()));
+			this.productManager.addPdf(new SheetPdf(parser.getSheetFile()));
 		}
 	}
 	
-	
-	private static void addProduct(Parser parser, ProductManager productManager, String data[]) throws DocumentException {
+	private void addProduct(String data[]) throws DocumentException {
 		Product product = new Product();
 		
-		if (parser.getCategory() == null ||
-				(parser.getCategory() != null && data[3].equals(parser.getCategory()))) {
-			product.setData(data[0], data[1], data[2], data[3], Float.valueOf(data[4].replace(',', '.')), parser.getTva());
-			productManager.addProduct(product);
+		if (this.category == null || 
+			(this.category == null && data[3].equals(this.category))) {
+			product.setData(data[0], data[1], data[2], data[3], Float.valueOf(data[4].replace(',', '.')), this.tva);
+			this.productManager.addProduct(product);
 		}
 	}
 	
 	
-	private static void convertCsvToPdf(Parser parser, CsvFile csv) throws IOException, NumberFormatException, DocumentException {
-		ProductManager productManager;
+	private void convertCsvToPdf(CsvFile csv) throws IOException, NumberFormatException, DocumentException {
 		String[] data;
-		
-		productManager = new ProductManager();
-		addPdf(parser, productManager);
+
 		while ((data = csv.readDataLine()) != null) {
-			if (data.length == 5) {
-				addProduct(parser, productManager, data);
-			}
+			addProduct(data);
 		}
 		productManager.closePdfs();
 	}
@@ -48,23 +52,25 @@ public final class ProductsToPdf {
 	public static void main(String[] args){
 		Parser parser;
 		CsvFile csv = null;
+		ProductsToPdf generator;
 		
 		try {
 			parser = new Parser();
 			csv = new CsvFile();
 			parser.parseParameters(args);
 			csv.open(parser.getInputFile());
-			convertCsvToPdf(parser, csv);
+			generator = new ProductsToPdf(parser.getCategory(), parser.getTva());
+			generator.addPdfs(parser);
+			generator.convertCsvToPdf(csv);
 		} catch (Exception e) {
 			System.err.println("Error: " + e.getMessage());
-			System.exit(3);
 		} finally {
-			if (csv != null) {
-				try {
+			try {
+				if (csv != null) {
 					csv.close();
-				} catch (Exception e) {
-					System.err.println("Error: " + e.getMessage());
 				}
+			} catch (Exception e) {
+				System.err.println("Error: " + e.getMessage());
 			}
 		}
 	}
