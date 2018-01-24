@@ -8,7 +8,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public abstract class AbstractPdf {
+public abstract class AbstractPdf implements InterfaceGenerator{
 	protected Document document;
 	protected String fileName;
 	protected PdfWriter writer;
@@ -37,7 +37,5 @@ public abstract class AbstractPdf {
 	public void close()  throws DocumentException {
 		document.close();
 	}
-	
-	public abstract void addProduct(Product product) throws DocumentException;
 	
 }

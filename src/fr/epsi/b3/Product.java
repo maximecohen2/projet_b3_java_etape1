@@ -9,14 +9,12 @@ public class Product {
 	private float prixHT;
 	private float prixTTC;
 	
-	public void setData(String code, String nom, String description, String categorie, float prixHT, float tva) {
+	public void setData(String code, String nom, String description, String categorie, float prixHT) {
 		this.code = code;
 		this.nom = nom;
 		this.description = description;
 		this.categorie = categorie;
 		this.prixHT = prixHT;
-		this.prixTTC = (prixHT / 100) * tva + prixHT;
-		this.tva = tva;
 	}
 	
 	public String getCode() {
@@ -45,5 +43,14 @@ public class Product {
 
 	public float getTva() {
 		return tva;
+	}
+	
+	public void setTva(float tva) {
+		this.prixTTC = (prixHT / 100) * tva + prixHT;
+		this.tva = tva;
+	}
+	
+	public boolean isCategory(String category) {
+		return this.categorie.equals(category);
 	}
 }

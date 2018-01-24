@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
+import fr.epsi.b3.Product;
+
 public class CsvFile {
 	private BufferedReader buffer;
 	
@@ -12,14 +14,16 @@ public class CsvFile {
 		this.buffer = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
 	}
 	
-	public String[] readDataLine() throws IOException {
+	public Product getNextProduct() throws IOException {
 		String line;
 		String[] data;
+		Product product = new Product();
 		if ((line = this.buffer.readLine()) == null) {
 			return null;
 		}
 		data = line.split(";");
-		return data;
+		product.setData(data[0], data[1], data[2], data[3], Float.valueOf(data[4].replace(',', '.')));
+		return product;
 	}
 	
 	public void close() throws IOException {

@@ -5,21 +5,21 @@ import java.util.ArrayList;
 import com.itextpdf.text.DocumentException;
 
 public class ProductManager {
-	private ArrayList<AbstractPdf> pdfFiles = new ArrayList<AbstractPdf>();
+	private ArrayList<InterfaceGenerator> pdfFiles = new ArrayList<>();
 	
-	public void addPdf(AbstractPdf newPdf) {
+	public void addPdf(InterfaceGenerator newPdf) {
 		newPdf.open();
 		this.pdfFiles.add(newPdf);
 	}
 	
 	public void addProduct(final Product newProduct) throws DocumentException {
-		for (AbstractPdf pdf : this.pdfFiles) {
+		for (InterfaceGenerator pdf : this.pdfFiles) {
 			pdf.addProduct(newProduct);
 		}
 	}
 	
 	public void closePdfs() throws DocumentException {
-		for (AbstractPdf pdf : this.pdfFiles) {
+		for (InterfaceGenerator pdf : this.pdfFiles) {
 			pdf.close();
 		}
 	}

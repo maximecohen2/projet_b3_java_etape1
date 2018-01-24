@@ -28,22 +28,19 @@ public final class ProductsToPdf {
 		}
 	}
 	
-	private void addProduct(String data[]) throws DocumentException {
-		Product product = new Product();
-		
-		if (this.category == null || 
-			(this.category == null && data[3].equals(this.category))) {
-			product.setData(data[0], data[1], data[2], data[3], Float.valueOf(data[4].replace(',', '.')), this.tva);
+	private void addProduct(Product product) throws DocumentException {
+		product.setTva(this.tva);
+		if (this.category == null || product.isCategory(this.category)) {
 			this.productManager.addProduct(product);
 		}
 	}
 	
 	
 	private void convertCsvToPdf(CsvFile csv) throws IOException, NumberFormatException, DocumentException {
-		String[] data;
+		Product product;
 
-		while ((data = csv.readDataLine()) != null) {
-			addProduct(data);
+		while ((product = csv.getNextProduct()) != null) {
+			addProduct(product);
 		}
 		productManager.closePdfs();
 	}
