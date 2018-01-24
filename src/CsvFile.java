@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
 
 import fr.epsi.b3.Product;
 
-public class CsvFile {
+public class CsvFile implements InterfaceReader{
 	private BufferedReader buffer;
 	
 	public void open(final String fileName) throws FileNotFoundException, UnsupportedEncodingException {

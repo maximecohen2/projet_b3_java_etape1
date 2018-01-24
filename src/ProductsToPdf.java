@@ -36,7 +36,7 @@ public final class ProductsToPdf {
 	}
 	
 	
-	private void convertCsvToPdf(CsvFile csv) throws IOException, NumberFormatException, DocumentException {
+	private void convertCsvToPdf(InterfaceReader csv) throws IOException, NumberFormatException, DocumentException {
 		Product product;
 
 		while ((product = csv.getNextProduct()) != null) {
@@ -48,23 +48,23 @@ public final class ProductsToPdf {
 	
 	public static void main(String[] args){
 		Parser parser;
-		CsvFile csv = null;
+		InterfaceReader reader = null;
 		ProductsToPdf generator;
 		
 		try {
 			parser = new Parser();
-			csv = new CsvFile();
+			reader = new CsvFile();
 			parser.parseParameters(args);
-			csv.open(parser.getInputFile());
+			reader.open(parser.getInputFile());
 			generator = new ProductsToPdf(parser.getCategory(), parser.getTva());
 			generator.addPdfs(parser);
-			generator.convertCsvToPdf(csv);
+			generator.convertCsvToPdf(reader);
 		} catch (Exception e) {
 			System.err.println("Error: " + e.getMessage());
 		} finally {
 			try {
-				if (csv != null) {
-					csv.close();
+				if (reader != null) {
+					reader.close();
 				}
 			} catch (Exception e) {
 				System.err.println("Error: " + e.getMessage());
