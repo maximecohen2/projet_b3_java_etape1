@@ -7,5 +7,5 @@ public interface InterfaceGenerator {
 	
 	public void close() throws DocumentException;
 	
-	public abstract void addProduct(Product product) throws DocumentException;
+	public void addProduct(Product product) throws DocumentException;
 }

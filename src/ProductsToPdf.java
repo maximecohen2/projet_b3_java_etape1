@@ -1,5 +1,3 @@
-import java.io.IOException;
-
 import com.itextpdf.text.DocumentException;
 
 import fr.epsi.b3.LabelPdf;
@@ -36,7 +34,7 @@ public final class ProductsToPdf {
 	}
 	
 	
-	private void convertCsvToPdf(InterfaceReader csv) throws IOException, NumberFormatException, DocumentException {
+	private void convertCsvToPdf(InterfaceReader csv) throws ReaderException, DocumentException {
 		Product product;
 
 		while ((product = csv.getNextProduct()) != null) {

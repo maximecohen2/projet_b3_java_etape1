@@ -4,6 +4,7 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 public class Parser {
 	private String inputFile;
@@ -70,7 +71,7 @@ public class Parser {
 	}
 	
 	//
-	public void parseParameters(String[] args) throws Exception {
+	public void parseParameters(String[] args) throws ParseException {
 		final Options helpOptions = configHelp();
 		final Options options = configParameters(helpOptions);
 		
@@ -90,7 +91,7 @@ public class Parser {
 		this.labelFile = line.getOptionValue("etiquette");
 		this.sheetFile = line.getOptionValue("fiche");
 		if (this.sheetFile == null && this.labelFile == null) {
-			throw new Exception("Need pdf outfile option");
+			throw new ParseException("Need pdf outfile option");
 		}
 		final String tvaFromParameter = line.getOptionValue("tva", "20.0");
 		this.tva = Float.valueOf(tvaFromParameter);

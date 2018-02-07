@@ -10,25 +10,37 @@ import fr.epsi.b3.Product;
 public class CsvFile implements InterfaceReader{
 	private BufferedReader buffer;
 	
-	public void open(final String fileName) throws FileNotFoundException, UnsupportedEncodingException {
-		this.buffer = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
+	public void open(final String fileName) throws ReaderException {
+		try {
+			this.buffer = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			throw new ReaderException(e);
+		}
 	}
 	
-	public Product getNextProduct() throws IOException {
+	public Product getNextProduct() throws ReaderException{
 		String line;
 		String[] data;
 		Product product = new Product();
-		if ((line = this.buffer.readLine()) == null) {
-			return null;
+		try {
+			if ((line = this.buffer.readLine()) == null) {
+				return null;
+			}
+		} catch (IOException e) {
+			throw new ReaderException(e);
 		}
 		data = line.split(";");
 		product.setData(data[0], data[1], data[2], data[3], Float.valueOf(data[4].replace(',', '.')));
 		return product;
 	}
 	
-	public void close() throws IOException {
+	public void close() throws ReaderException {
 		if (this.buffer != null) {
-			this.buffer.close();
+			try {
+				this.buffer.close();
+			} catch (IOException e) {
+				throw new ReaderException(e);
+			} 
 		}
 	}
 }

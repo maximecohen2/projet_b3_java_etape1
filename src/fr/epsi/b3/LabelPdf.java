@@ -2,8 +2,6 @@ package fr.epsi.b3;
 
 
 import java.io.IOException;
-import java.text.DecimalFormat;
-
 import com.google.zxing.WriterException;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -36,7 +34,7 @@ public class LabelPdf extends AbstractPdf {
 		try {
 			Image qr = QrCode.generate(product.getCode(),40);
 			qr.scalePercent(150f);
-			Paragraph PdtPrix = new Paragraph(String.format("%.2f",product.getPrixTTC()) + "€ TTC (" + String.format("%.2f",product.getPrixHT()) + "€ HT )",fontReduce);
+			Paragraph PdtPrix = new Paragraph(String.format("%.2f",product.getPrixTTC()) + "ï¿½ TTC (" + String.format("%.2f",product.getPrixHT()) + "ï¿½ HT )",fontReduce);
 			Paragraph PdtCode = new Paragraph(product.getCode(),fontNormal);
 			Paragraph PdtNom = new Paragraph(product.getNom(),fontNormal);
 			PdfPCell cell = new PdfPCell();
